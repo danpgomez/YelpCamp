@@ -42,9 +42,11 @@ app.use(helmet({
     contentSecurityPolicy: false
 }));
 
+const secret = process.env.SECRET || 'putthisinenvvariable';
+
 const store = new MongoDBStore({
     url: dbUrl,
-    secret: 'putthisinenvvariable',
+    secret,
     touchAfter: 24 * 3600 // seconds
 });
 
@@ -57,7 +59,7 @@ const oneWeekMillis = 1000 + 60 + 60 + 24 + 7;
 const sessionConfig = {
     store,
     name: 'session',
-    secret: 'putthisinenvvariable',
+    secret,
     resave: false,
     saveUninitialized: true,
     httpOnly: true,
